@@ -1,3 +1,10 @@
+/* Classe que substitui o Try cath no controlador, através da notation @ControllerAdvice */
+/* A estrtura funciona da seguinte maneira: a camada de serviço envia a mensagem ao EntityNotFoundException. Essa classe identifica que é se 
+ * trata de um erro e retorna ao controlador. O controlador identifica o erro através desta classe graças ao @ControllerAdvice e
+ * faz a substituição do erro 500 para o o erro 400 (um erro mais claro para o usuário). A classe StandarError é responsável pela
+   pela substituição do erro 500 para o erro 400
+ */
+
 package com.devsuperior.dsclient.resources.exceptions;
 
 import java.time.Instant;
