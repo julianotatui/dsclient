@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +38,7 @@ public class ClientService {
 
 	}
 	
-	@Transactional (readOnly = true) 
+	@Transactional
 	public ClientDto insert(ClientDto dto) {
 		
 		Client entity = new Client();
@@ -52,6 +54,30 @@ public class ClientService {
 	    return new ClientDto(entity);
 	    
 		
+	}
+	
+	@Transactional
+	public ClientDto update(long id, ClientDto dto){
+	    try { 
+		        Client entity = repository.getOne(id); // o getOne não busca a informação no banco de dados, ele instacia um objeto provisório diferente do findbyid que vai buscar a informação no banco
+		
+		        entity.setName(dto.getName());
+		        entity.setCpf(dto.getCpf());
+		        entity.setIcome(dto.getIcome());
+		        entity.setChildren(dto.getChildren());
+		        entity.setBirthDate(dto.getBirthDate());
+		
+	            entity = repository.save(entity); //Responsável por salvar
+	    
+	            return new ClientDto(entity);
+	    }
+	    
+	    catch (EntityNotFoundException e) {
+	       
+	    	throw new MyEntityNotFoundException("Cliente não localizado !!!");
+	    
+	    }
+	   
 	}
 	
 }
