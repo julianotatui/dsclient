@@ -36,4 +36,22 @@ public class ClientService {
 
 	}
 	
+	@Transactional (readOnly = true) 
+	public ClientDto insert(ClientDto dto) {
+		
+		Client entity = new Client();
+		
+		entity.setName(dto.getName());
+		entity.setCpf(dto.getCpf());
+		entity.setIcome(dto.getIcome());
+		entity.setChildren(dto.getChildren());
+		entity.setBirthDate(dto.getBirthDate());
+		
+	    entity = repository.save(entity); //Responsável por salvar
+	    
+	    return new ClientDto(entity);
+	    
+		
+	}
+	
 }

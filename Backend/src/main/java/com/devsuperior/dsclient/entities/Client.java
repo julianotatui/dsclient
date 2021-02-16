@@ -74,6 +74,10 @@ public class Client implements Serializable {
 	public void setIcome(double icome) {
 		this.icome = icome;
 	}
+	
+	public void setBirthDate(Instant birthDate) {
+		this.birthDate = birthDate;
+	}
 
 	public Instant getBirthDate() {
 		return birthDate;
