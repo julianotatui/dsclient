@@ -8,6 +8,8 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,17 @@ public class ClientService {
 		
 
 	}
+
+	
+	@Transactional (readOnly = true) //garante a integridade da transação e as propriedades ACID - conceito do banco relacional. O readOnly evita o lock de tabelas
+	public Page<ClientDto> findAllPaged(PageRequest pageRequest){
+	     
+		Page<Client> page = repository.findAll(pageRequest);
+		return page.map(x -> new ClientDto(x)); /* o page já é um recurso Stream, não é necessário converter */
+		
+
+	}
+
 	
 	@Transactional (readOnly = true) //garante a integridade da transação e as propriedades ACID - conceito do banco relacional. O readOnly evita o lock de tabelas
 	public ClientDto findById(long id){

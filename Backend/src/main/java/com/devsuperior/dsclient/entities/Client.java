@@ -3,10 +3,13 @@ package com.devsuperior.dsclient.entities;
 import java.io.Serializable;
 import java.time.Instant;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 
@@ -24,6 +27,10 @@ public class Client implements Serializable {
 	private double icome;
 	private Instant birthDate;
 	private int children;
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant logCreated;
+	@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+	private Instant logLastUpdate;
 	
 	public Client() {
 		
@@ -47,9 +54,6 @@ public class Client implements Serializable {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -89,6 +93,26 @@ public class Client implements Serializable {
 
 	public void setChildren(int children) {
 		this.children = children;
+	}
+	
+	public Instant getLogCreated() {
+		return logCreated;
+	}
+
+	public Instant getLogLastUpdate() {
+		return logLastUpdate;
+	}
+
+	/* auditoria de criação e atualização  */
+	
+	@PrePersist   
+	public void logCreated() {
+		this.logCreated = Instant.now();
+	}
+	
+	@PreUpdate
+	public void logUpdated() {
+		this.logLastUpdate = Instant.now();
 	}
 
 	@Override

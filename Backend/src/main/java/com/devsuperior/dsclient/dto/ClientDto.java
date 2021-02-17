@@ -15,6 +15,7 @@ public class ClientDto  implements Serializable {
 	private double icome;
 	private Instant birthDate;
 	private int children;
+	private Instant logCreated;
 	
     public ClientDto() {
 		
@@ -39,6 +40,7 @@ public class ClientDto  implements Serializable {
 		this.icome = Entity.getIcome();
 		this.birthDate = Entity.getBirthDate();
 		this.children = Entity.getChildren();
+		this.logCreated = Entity.getLogCreated();
     	
 	  }
 
@@ -87,9 +89,12 @@ public class ClientDto  implements Serializable {
 	public void setChildren(int children) {
 		this.children = children;
 	}
-	
-	
 
-	
+
+	public Instant getLogCreated() {
+		return logCreated;
+	}
+
+
 
 }
