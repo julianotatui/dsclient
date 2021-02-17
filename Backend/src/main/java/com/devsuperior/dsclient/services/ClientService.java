@@ -57,13 +57,9 @@ public class ClientService {
 		
 		Client entity = new Client();
 		
-		entity.setName(dto.getName());
-		entity.setCpf(dto.getCpf());
-		entity.setIcome(dto.getIcome());
-		entity.setChildren(dto.getChildren());
-		entity.setBirthDate(dto.getBirthDate());
+		EntityToDto(entity, dto);
 		
-	    entity = repository.save(entity); //Responsável por salvar
+		entity = repository.save(entity); //Responsável por salvar
 	    
 	    return new ClientDto(entity);
 	    
@@ -74,14 +70,10 @@ public class ClientService {
 	public ClientDto update(long id, ClientDto dto){
 	    try { 
 		        Client entity = repository.getOne(id); // o getOne não busca a informação no banco de dados, ele instacia um objeto provisório diferente do findbyid que vai buscar a informação no banco
-		
-		        entity.setName(dto.getName());
-		        entity.setCpf(dto.getCpf());
-		        entity.setIcome(dto.getIcome());
-		        entity.setChildren(dto.getChildren());
-		        entity.setBirthDate(dto.getBirthDate());
-		
-	            entity = repository.save(entity); //Responsável por salvar
+		        
+		        EntityToDto(entity, dto);
+
+		        entity = repository.save(entity); //Responsável por salvar
 	    
 	            return new ClientDto(entity);
 	    }
@@ -107,6 +99,16 @@ public class ClientService {
     	}
      	
 	}
+    
+    private void EntityToDto(Client entity, ClientDto dto) {
+    	
+        entity.setName(dto.getName());
+        entity.setCpf(dto.getCpf());
+        entity.setIcome(dto.getIcome());
+        entity.setChildren(dto.getChildren());
+        entity.setBirthDate(dto.getBirthDate());
+    
+    }
 	
 	
 }
